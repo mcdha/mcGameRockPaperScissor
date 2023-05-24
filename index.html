@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mcGame</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/e391ce7786.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+</head>
+<body>
+    <div id="hide" class="mt-5">
+    <h1 style="color: rgb(41, 40, 40); justify-content: center; display: flex;">Rock Paper Scissors</h1>
+    <!-- <h2 id="demo">Try your luck ! </h2> -->
+    <div class="container">
+        <div class="section">
+            <div class="info">
+                <h3>You :</h3><span id="playerScore">0</span>
+            </div>
+            <div class="show" id="showme">
+               
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="info">
+                <h3>Computer :</h3><span id="computerScore">0</span>
+            </div>
+            <div class="show computer" id="showthem">
+                
+            </div>
+        </div>
+    </div>
+    <h2 style="color: rgb(41, 40, 40); justify-content: center; display: flex;" id="choose">Choose One!</h2>
+    <label style="color: rgb(41, 40, 40); justify-content: center; display: flex;" id="round">Round</label>
+<div style="justify-content: center; display: flex;">
+    <div class="selection">
+        <button onclick="rock1()" class="fas fa-hand-rock" id="rock"></button>
+        <button onclick="paper1()" class="fas fa-hand-paper" id="paper"></button>
+        <button onclick="scissors1()" class="fas fa-hand-scissors" id="scissors"></button>
+    </div>
+</div>
+<div style="justify-content: center; display: flex; margin-top: 15%;"><button onclick="btn1()" id="exit" class="btn btn-dark d-flex justify-content-center" >Exit</button></div>
+
+</div>
+<button onclick="btn()" id="clickMe" class="btn btn-dark d-flex justify-content-center" style="margin-top: 25%;">Click Me</button>
+</body>
+
+
+<script>
+
+let choose =  document.getElementById('choose');
+let showme = document.getElementById('showme');
+let showthem = document.getElementById('showthem');
+let ai = ['rock', 'paper', 'scissors']
+let playerScore = document.getElementById('playerScore');
+let computerScore = document.getElementById('computerScore');
+let userScore = 0;
+let aiScore = 0;
+let roundBaby = 1;
+let round = document.getElementById('round');
+
+round.innerHTML = "ROUND " +roundBaby;
+
+
+// HIDE AND SHOW SA START
+document.getElementById('hide').style.display = "none";
+
+
+function btn() {
+    document.getElementById('hide').style.display = "block";
+    document.getElementById('clickMe').classList.add('d-none');
+}
+
+function btn1() {
+    document.getElementById('clickMe').style.display = 'block';
+    document.getElementById('exit').style.display = 'none';
+}
+
+
+// BUTTONS FUNCTIONS
+function rock1() {
+ choose.style.display = "none";
+ showme.innerHTML = '<i class="fas fa-hand-rock"></i>';
+ let computer = computerAi();
+ showthem.innerHTML = '<i class="fas fa-hand-'+computer+'"></i>';
+ referee('rock', computer)
+}
+
+function paper1() {
+ choose.style.display = "none";
+ showme.innerHTML = '<i class="fas fa-hand-paper"></i>';
+ let computer = computerAi();
+ showthem.innerHTML = '<i class="fas fa-hand-'+computer+'"></i>';
+ referee('paper', computer)
+}
+
+function scissors1() {
+ choose.style.display = "none";
+ showme.innerHTML = '<i class="fas fa-hand-scissors"></i>';
+ let computer = computerAi();
+ showthem.innerHTML = '<i class="fas fa-hand-'+computer+'"></i>';
+ referee('scissors', computer)
+}
+
+
+function computerAi() {
+    let randomIndex = Math.floor(Math.random() * ai.length);
+    let randomElement = ai[randomIndex];
+    // console.log(randomElement);
+    return randomElement
+}
+
+function referee(user, computer) {
+    console.log(user, computer);
+
+    if (user == 'rock' && computer == "paper") {
+        choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>You lose brother</p>";
+        aiScore++;
+        
+    }
+
+    if (user == 'rock' && computer == "scissors") {
+        choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>You win brother</p>";
+        userScore++;
+    }
+
+    if (user == 'rock' && computer == "rock") {
+        choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>Were tied brother</p>";
+    }
+
+    if (user == 'paper' && computer == "rock") {
+        choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>You win brother</p>";
+        userScore++;
+    }
+
+    if (user == 'paper' && computer == "paper") {
+        choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>Were tied brother</p>";
+    }
+
+    if (user == 'paper' && computer == "scissors") {
+        choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>You lose brother</p>";
+        aiScore++;
+    }
+
+    if (user == 'scissors' && computer == "rock") {
+        choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>You lose brother</p>";
+        aiScore++;
+    }
+
+    if (user == 'scissors' && computer == "paper") {
+        choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>You win brother</p>";
+        userScore++;
+    }
+
+    if (user == 'scissors' && computer == "scissors") {
+        choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>Were tied brother</p>";
+    }
+
+    computerScore.innerHTML = aiScore;
+    playerScore.innerHTML = userScore;
+    choose.style.display = 'block';
+    roundBaby++;
+    round.innerHTML = 'ROUND ' + roundBaby; 
+
+    if (roundBaby == 6) {
+        if (userScore > aiScore) {
+            alert('User win');
+        }
+
+        if (userScore < aiScore) {
+            alert('Computer win');
+        }
+
+        if (userScore == aiScore) {
+            alert('Tied');
+        }
+       console.log(roundBaby);
+       aiScore = 0;
+       userScore = 0;
+       computerScore.innerHTML = aiScore;
+       playerScore.innerHTML = userScore;
+       choose.innerHTML = "<p style = 'display: flex; justify-content: center;'>Choose One!</p>";
+       roundBaby = 1;
+       round.innerHTML = "ROUND " + roundBaby;
+    }
+}
+
+function btn() {
+    document.getElementById('hide').style.display = "block";
+    document.getElementById('clickMe').classList.add('d-none');
+}
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</html>
